@@ -15,11 +15,12 @@ const productSchema= new mongoose.Schema({
         type:Number,
         required:true
     },
+    colors:[String],
     images:[String],
-    totalReviews:{
+    averageRating:{
         type:Number
     },
-    averageRating:Number,
+    // averageRating:Number,
 
 },{
     timestamps:true
