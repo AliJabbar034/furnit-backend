@@ -2,3 +2,4 @@ final.pem
 .env
 node_modules
 
+public/
