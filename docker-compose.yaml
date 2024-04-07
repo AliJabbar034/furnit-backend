@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  backend:
+    image: alijabbar/tse
+    container_name: backend
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - /home/ali/E/ts/ecomerce/backend/data:/data/db 
+    
+    ports:
+      - 27017:27017
+     
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+            
