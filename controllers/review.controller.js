@@ -22,7 +22,8 @@ exports.createReview= catchAsync(
         }
 
         return res.status(200).json({
-            message:"review created succesffully"
+            message:"review created succesffully",
+            
         })
 
     }
@@ -34,7 +35,7 @@ exports.getAllReviews= catchAsync(
         
         const {productId}= req.params;
 
-        const reviews = await ReviewModel.find({productId:productId});
+        const reviews = await ReviewModel.find({productId:productId}).select('-createdAt -updatedAt -__v');
         if (reviews.length ===0){
             return next(new ErrorHandler("no review found",404) )
         }

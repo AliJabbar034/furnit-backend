@@ -16,7 +16,7 @@ exports.getAllProductService= async(req)=>{
     
 
   
-    if(queryParams.title){
+    if(queryParams.title !==undefined){
         query["title"]=queryParams.title
     }
     if(queryParams.price){
@@ -43,13 +43,16 @@ exports.getAllProductService= async(req)=>{
     if(query.colors){
         query["colors"]= query.colors;
     }
-    if(queryParams.sortPriceHigh){
-        sort["price"]=queryParams.sortPriceHigh
+    
+    if(queryParams.sort){
+        sort["price"]=Number(queryParams.sort)
     }
-    if(queryParams.sortPriceLow){
-        sort["price"]=queryParams.sortPriceLow
-    }
+
+    // console.log(query);
+    // console.log(sort);
+
+    
+    const products= await ProductModel.find(query).sort(sort).limit(limit).skip(skip).select('-createdAt -updatedAt -__v');
    
-    const products= await ProductModel.find(query).sort(sort).limit(limit).skip(skip);
     return products;
 }

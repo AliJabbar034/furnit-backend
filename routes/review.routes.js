@@ -4,7 +4,7 @@ const Authenticate = require("../middleware/authenticate");
 
 const router= express.Router();
 
-router.route("/").post(Authenticate,createReview)
+router.route("/:productId").post(createReview)
 router.route("/:productId").get(getAllReviews)
 
 

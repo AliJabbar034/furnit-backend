@@ -23,16 +23,29 @@ const reviewSchema= new mongoose.Schema({
 
 reviewSchema.pre('save',  async function(next){
 
-    await this.constructor.updateProductAverageRating(this.productId);
+  try {
+      await this.constructor.updateProductAverageRating(this.productId);
 
     next()
 
+  } catch (error) {
+     console.log(error.message);
+
+     
+  }
 })
 
 reviewSchema.pre('deleteOne', async function(next){
+    const query= this.find();
     await this.constructor.updateProductAverageRating(this.productId)
-    next()
+    next(query)
 } )
+
+
+reviewSchema.post("deleteOne", function (){
+
+    
+})
 
 
 reviewSchema.statics.updateProductAverageRating = async function(productId) {
@@ -47,7 +60,9 @@ reviewSchema.statics.updateProductAverageRating = async function(productId) {
 
         const averageRating = aggregation.length > 0 ? aggregation[0].averageRating : 0;
 
-        await Product.findByIdAndUpdate(productId, { averageRating });
+
+      const updatedProdct=  await Product.findByIdAndUpdate(productId, { averageRating },{new:true});
+     
     } catch (error) {
         console.error('Error updating product average rating:', error);
     }

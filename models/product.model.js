@@ -17,8 +17,10 @@ const productSchema= new mongoose.Schema({
     },
     colors:[String],
     images:[String],
+
     averageRating:{
-        type:Number
+        type:Number,
+        default:0
     },
     // averageRating:Number,
 

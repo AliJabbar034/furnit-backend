@@ -56,7 +56,7 @@ exports.getAllProduct= catchAsync(
 exports.getAProduct= catchAsync(
     async (req,res,next)=>{
         const {productId}= req.params;
-        const product = await ProductModel.findById(productId)
+        const product = await ProductModel.findById(productId).select('-createdAt -updatedAt -__v');
 
         if (!product){
             return next(new ErrorHandler("not product found",404))
